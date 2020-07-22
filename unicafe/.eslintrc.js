@@ -1,10 +1,11 @@
 module.exports = {
     'env': {
         'browser': true,
+        'jest': true,
         'es2020': true
     },
     "plugins": [
-        "react"
+        "react", "jest"
     ],
     "extends": [ 
         "eslint:recommended",
