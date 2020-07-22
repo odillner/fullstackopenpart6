@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze'
-import counterReducer from './reducer'
+import counterReducer, {voteGood, voteNeutral, voteBad, performReset} from './reducer'
 
 describe('unicafe reducer', () => {
     const initialState = {
@@ -19,13 +19,10 @@ describe('unicafe reducer', () => {
     })
 
     test('good is incremented', () => {
-        const action = {
-            type: 'GOOD'
-        }
         const state = initialState
 
         deepFreeze(state)
-        const newState = counterReducer(state, action)
+        const newState = counterReducer(state, voteGood())
         expect(newState).toEqual({
             good: 1,
             neutral: 0,
@@ -34,13 +31,10 @@ describe('unicafe reducer', () => {
     })
 
     test('neutral is incremented', () => {
-        const action = {
-            type: 'NEUTRAL'
-        }
         const state = initialState
 
         deepFreeze(state)
-        const newState = counterReducer(state, action)
+        const newState = counterReducer(state, voteNeutral())
         expect(newState).toEqual({
             good: 0,
             neutral: 1,
@@ -49,13 +43,10 @@ describe('unicafe reducer', () => {
     })
 
     test('bad is incremented', () => {
-        const action = {
-            type: 'BAD'
-        }
         const state = initialState
 
         deepFreeze(state)
-        const newState = counterReducer(state, action)
+        const newState = counterReducer(state, voteBad())
         expect(newState).toEqual({
             good: 0,
             neutral: 0,
@@ -64,13 +55,10 @@ describe('unicafe reducer', () => {
     })
 
     test('state is reset', () => {
-        const action = {
-            type: 'RESET'
-        }
         const state = initialState
 
         deepFreeze(state)
-        const newState = counterReducer(state, action)
+        const newState = counterReducer(state, performReset())
         expect(newState).toEqual(initialState)
     })
 })

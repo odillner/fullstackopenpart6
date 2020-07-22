@@ -38,4 +38,29 @@ const counterReducer = (state = initialState, action) => {
 
 }
 
+
+export const voteGood = () => {
+    return {
+        type: 'GOOD'
+    }
+}
+
+export const voteNeutral = () => {
+    return {
+        type: 'NEUTRAL'
+    }
+}
+
+export const voteBad = () => {
+    return {
+        type: 'BAD'
+    }
+}
+
+export const performReset = () => {
+    return {
+        type: 'ZERO'
+    }
+}
+
 export default counterReducer

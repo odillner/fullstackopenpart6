@@ -1,48 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
 import {createStore} from 'redux'
+
 import reducer from './reducer'
+import App from './App'
 
 const store = createStore(reducer)
 
-const App = () => {
-    const neutral = () => {
-        store.dispatch({
-            type: 'NEUTRAL'
-        })
-    }
-    const good = () => {
-        store.dispatch({
-            type: 'GOOD'
-        })
-    }
-    const bad = () => {
-        store.dispatch({
-            type: 'BAD'
-        })
-    }
-    const reset = () => {
-        store.dispatch({
-            type: 'ZERO'
-        })
-    }
-
-
-    return (
-        <div>
-            <button onClick={good}>good</button>
-            <button onClick={neutral}>neutral</button>
-            <button onClick={bad}>bad</button>
-            <button onClick={reset}>reset stats</button>
-            <div>good {store.getState().good}</div>
-            <div>neutral {store.getState().neutral}</div>
-            <div>bad {store.getState().bad}</div>
-        </div>
-    )
-}
 
 const renderApp = () => {
-    ReactDOM.render(<App />, document.getElementById('root'))
+    ReactDOM.render(
+        <Provider store={store}>
+            <App/>
+        </Provider>,
+        document.getElementById('root')
+    )
 }
 
 renderApp()
