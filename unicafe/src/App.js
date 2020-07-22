@@ -10,16 +10,40 @@ const App = () => {
     const good = () => {
         dispatch(voteGood())
     }
+
     const neutral = () => {
         dispatch(voteNeutral())
     }
+
     const bad = () => {
         dispatch(voteBad())
     }
+
     const reset = () => {
         dispatch(performReset())
     }
 
+    const getTotal = () => {
+        return votes.good + votes.neutral + votes.bad
+    }
+
+    const getAverage = () => {
+        const total = getTotal()
+
+        if (total === 0) {return 0}
+
+        const sum = votes.good + votes.bad * -1
+
+        return sum/total
+    }
+
+    const getPositive = () => {
+        const total = getTotal()
+
+        if (total === 0) {return 0}
+
+        return votes.good/total * 100
+    }
 
     return (
         <div>
@@ -30,6 +54,9 @@ const App = () => {
             <div>good {votes.good}</div>
             <div>neutral {votes.neutral}</div>
             <div>bad {votes.bad}</div>
+            <div>total votes {getTotal()}</div>
+            <div>average vote {getAverage()}</div>
+            <div>positive % {getPositive()}</div>
         </div>
     )
 }
