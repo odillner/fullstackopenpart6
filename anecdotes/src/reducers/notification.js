@@ -3,18 +3,24 @@ const notificationReducer = (state = null, action) => {
     case 'DISPLAY_INFO': {
         const newState = {
             type: 'info',
-            message: action.data
+            message: action.data.message,
+            timeout: action.data.timeout
         }
         return newState
     }
     case 'DISPLAY_ERROR': {
         const newState = {
             type: 'error',
-            message: action.data
+            message: action.data.message,
+            timeout: action.data.timeout
         }
         return newState
     }
     case 'RESET_NOTIFICATION': {
+        if (state) {
+            console.log(state.timeout)
+            clearTimeout(state.timeout)
+        }
         return null
     }
     default: return state
@@ -24,30 +30,38 @@ const notificationReducer = (state = null, action) => {
 export const displayInfo = (message, duration) => {
     return async dispatch => {
         dispatch({
-            type: 'DISPLAY_INFO',
-            data: message
+            type: 'RESET_NOTIFICATION',
         })
 
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             dispatch({
                 type: 'RESET_NOTIFICATION',
             })
         }, duration*1000)
+
+        dispatch({
+            type: 'DISPLAY_INFO',
+            data: {message, timeout}
+        })
     }
 }
 
 export const displayError = (message, duration) => {
     return async dispatch => {
         dispatch({
-            type: 'DISPLAY_ERROR',
-            data: message
+            type: 'RESET_NOTIFICATION',
         })
 
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             dispatch({
                 type: 'RESET_NOTIFICATION',
             })
         }, duration*1000)
+
+        dispatch({
+            type: 'DISPLAY_ERROR',
+            data: {message, timeout}
+        })
     }
 }
 
