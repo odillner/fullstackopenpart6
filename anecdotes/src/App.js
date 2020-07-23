@@ -1,16 +1,17 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
 
 import AnecdoteList from './components/AnecdoteList'
 import NewAnecdote from './components/NewAnecdote'
+import Notification from './components/Notification'
+import FilterForm from './components/FilterForm'
 
 const App = () => {
-    const anecdotes = useSelector(state => state)
-
     return (
-        <div>
+        <div className='big-wrapper'>
+            <Notification/>
+            <FilterForm/>
             <h2>Anecdotes</h2>
-            <AnecdoteList anecdotes={anecdotes}/>
+            <AnecdoteList/>
             <NewAnecdote/>
         </div>
     )
