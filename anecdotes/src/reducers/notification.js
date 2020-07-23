@@ -21,17 +21,33 @@ const notificationReducer = (state = null, action) => {
     }
 }
 
-export const displayInfo = (message) => {
-    return {
-        type: 'DISPLAY_INFO',
-        data: message
+export const displayInfo = (message, duration) => {
+    return async dispatch => {
+        dispatch({
+            type: 'DISPLAY_INFO',
+            data: message
+        })
+
+        setTimeout(() => {
+            dispatch({
+                type: 'RESET_NOTIFICATION',
+            })
+        }, duration*1000)
     }
 }
 
-export const displayError = (message) => {
-    return {
-        type: 'DISPLAY_ERROR',
-        data: message
+export const displayError = (message, duration) => {
+    return async dispatch => {
+        dispatch({
+            type: 'DISPLAY_ERROR',
+            data: message
+        })
+
+        setTimeout(() => {
+            dispatch({
+                type: 'RESET_NOTIFICATION',
+            })
+        }, duration*1000)
     }
 }
 

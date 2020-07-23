@@ -2,10 +2,10 @@ import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import {voteOnAnecdote} from '../reducers/anecdote'
-import {displayInfo, clearNotification} from '../reducers/notification'
+import {voteOnAnecdote, deleteAnecdote} from '../reducers/anecdote'
+import {displayInfo, displayError} from '../reducers/notification'
 
-const Anecdote = ({anecdote, vote}) => {
+const Anecdote = ({anecdote, vote, remove}) => {
     return (
         <div>
             <div className='anecdote'>
@@ -13,8 +13,11 @@ const Anecdote = ({anecdote, vote}) => {
                     {anecdote.content}
                 </div>
                 <div>
-                has {anecdote.votes}
+                    has {anecdote.votes}
                     <button onClick={() => vote(anecdote)}>vote</button>
+                </div>
+                <div>
+                    <button onClick={() => remove(anecdote)}>remove</button>
                 </div>
             </div>
         </div>
@@ -30,27 +33,40 @@ const AnecdoteList = () => {
             anecdote.content.toLowerCase().includes(filter.toLowerCase())
         )
     })
+
     const dispatch = useDispatch()
 
-    const vote = (anecdote) => {
-        dispatch(voteOnAnecdote(anecdote.id))
-        info(`You voted on '${anecdote.content}'`)
+    const vote = async (anecdote) => {
+        try {
+            dispatch(voteOnAnecdote(anecdote))
+            dispatch(displayInfo(`You voted on '${anecdote.content}'`, 5))
+        } catch (err) {
+            dispatch(displayError('Failed voting on anecdote', 5))
+        }
     }
 
-    const info = (message) => {
-        dispatch(displayInfo(message))
-        setTimeout(() => {dispatch(clearNotification())}, 5000)
+    const remove = async (anecdote) => {
+        try {
+            dispatch(deleteAnecdote(anecdote))
+            dispatch(displayInfo(`You removed '${anecdote.content}'`, 5))
+        } catch (err) {
+            dispatch(displayError('Failed removing anecdote', 5))
+        }
     }
 
     const sortedAnecdotes = anecdotes.sort((a,b) => b.votes - a.votes)
 
-    return (
-        <div className='wrapper'>
-            {sortedAnecdotes.map(anecdote =>
-                <Anecdote key={anecdote.id} anecdote={anecdote} vote={vote}/>
-            )}
-        </div>
-    )
+    if (anecdotes[0]) {
+        return (
+            <div className='wrapper'>
+                {sortedAnecdotes.map(anecdote =>
+                    <Anecdote key={anecdote.id} anecdote={anecdote} vote={vote} remove={remove}/>
+                )}
+            </div>
+        )
+    } else {
+        return null
+    }
 }
 
 Anecdote.propTypes = {
