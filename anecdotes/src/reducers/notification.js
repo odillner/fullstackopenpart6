@@ -18,7 +18,6 @@ const notificationReducer = (state = null, action) => {
     }
     case 'RESET_NOTIFICATION': {
         if (state) {
-            console.log(state.timeout)
             clearTimeout(state.timeout)
         }
         return null

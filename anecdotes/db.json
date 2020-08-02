@@ -1,24 +1,24 @@
 {
   "anecdotes": [
     {
-      "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
-      "id": "36975",
-      "votes": 66
-    },
-    {
       "content": "sadfasdfas",
-      "votes": 24,
+      "votes": 73,
       "id": "z5LLJmr"
     },
     {
       "content": "sadfasdf",
-      "votes": 3,
+      "votes": 78,
       "id": "TMjo9zz"
     },
     {
       "content": "asdfasdf",
-      "votes": 2,
+      "votes": 24,
       "id": "4esgwaS"
+    },
+    {
+      "content": "sad",
+      "votes": 0,
+      "id": "OYomJvt"
     }
   ]
 }
